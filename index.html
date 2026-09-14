@@ -13,7 +13,7 @@
     rel="stylesheet">
   <link rel="stylesheet" href="styles.css">
   <link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css"
-    integrity="sha256-p4NxAoJBhIINfQ3S7pFf3sN1hQ6FzQn6x1M7HnK5p0M=" crossorigin="">
+    integrity="sha256-p4NxAoJBhIIN+hmNHrzRCf9tD/miZyoHS5obTRR9BMY=" crossorigin="">
 </head>
 
 <body>
@@ -126,6 +126,21 @@
         </div>
       </div>
     </div>
+  </dialog>
+  <dialog id="access-dialog" class="access-dialog" aria-labelledby="access-title">
+    <button class="dialog-close" id="access-close" type="button" aria-label="Close server access">&#10005;</button>
+    <div class="access-mark">LC / PRIVATE GATE</div>
+    <p class="kicker">External access</p>
+    <h2 id="access-title">Enter the<br><em>private room.</em></h2>
+    <p class="access-intro">This gate is ready for the server connection. The destination has not been configured yet.
+    </p>
+    <form id="access-form" class="access-form">
+      <label>Username<input id="access-username" name="username" type="text" autocomplete="username" required></label>
+      <label>Password<input id="access-password" name="password" type="password" autocomplete="current-password"
+          required></label>
+      <button class="access-submit" type="submit">Connect <span>&#8594;</span></button>
+      <p id="access-status" class="access-status" role="status" aria-live="polite"></p>
+    </form>
   </dialog>
   <footer class="site-footer section-wrap"><span>LaCousine / LatinHub</span><span>Recipes are memories with a
       pulse.</span><span>Back to top &#8593;</span></footer>

@@ -36,6 +36,9 @@ const letters = document.querySelector('#letter-filter');
 const dialog = document.querySelector('#dish-dialog');
 const chefSearch = document.querySelector('#chef-search');
 const peopleGrid = document.querySelector('#people-grid');
+const accessDialog = document.querySelector('#access-dialog');
+const accessForm = document.querySelector('#access-form');
+const accessPhrase = 'solo culpen a diego';
 let activeLetter = 'all';
 
 function renderLetters() {
@@ -71,8 +74,22 @@ function openDish(dish) {
 
 grid.addEventListener('click', event => { const card = event.target.closest('[data-dish]'); if (card) openDish(dishes[Number(card.dataset.dish)]); });
 search.addEventListener('input', renderDishes);
+search.addEventListener('keydown', event => {
+  if (event.key !== 'Enter') return;
+  if (search.value.trim().toLowerCase() !== accessPhrase) return;
+  event.preventDefault();
+  accessForm.reset();
+  document.querySelector('#access-status').textContent = '';
+  accessDialog.showModal();
+});
 document.querySelector('#dialog-close').addEventListener('click', () => dialog.close());
 dialog.addEventListener('click', event => { if (event.target === dialog) dialog.close(); });
+document.querySelector('#access-close').addEventListener('click', () => accessDialog.close());
+accessDialog.addEventListener('click', event => { if (event.target === accessDialog) accessDialog.close(); });
+accessForm.addEventListener('submit', event => {
+  event.preventDefault();
+  document.querySelector('#access-status').textContent = 'Server destination not configured yet.';
+});
 
 document.querySelector('#random-button').addEventListener('click', () => openDish(dishes[Math.floor(Math.random() * dishes.length)]));
 
