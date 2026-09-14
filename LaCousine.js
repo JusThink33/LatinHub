@@ -32,6 +32,7 @@ const chefs = [
 
 const grid = document.querySelector('#dish-grid');
 const search = document.querySelector('#dish-search');
+const searchForm = document.querySelector('#dish-search-form');
 const letters = document.querySelector('#letter-filter');
 const dialog = document.querySelector('#dish-dialog');
 const chefSearch = document.querySelector('#chef-search');
@@ -40,6 +41,16 @@ const accessDialog = document.querySelector('#access-dialog');
 const accessForm = document.querySelector('#access-form');
 const accessPhrase = 'solo culpen a diego';
 let activeLetter = 'all';
+
+function normalizedSearch(value) {
+  return value.trim().toLowerCase().replace(/\s+/g, ' ');
+}
+
+function openAccessGate() {
+  accessForm.reset();
+  document.querySelector('#access-status').textContent = '';
+  accessDialog.showModal();
+}
 
 function renderLetters() {
   const available = [...new Set(dishes.map(dish => dish.letter))].sort();
@@ -74,13 +85,10 @@ function openDish(dish) {
 
 grid.addEventListener('click', event => { const card = event.target.closest('[data-dish]'); if (card) openDish(dishes[Number(card.dataset.dish)]); });
 search.addEventListener('input', renderDishes);
-search.addEventListener('keydown', event => {
-  if (event.key !== 'Enter') return;
-  if (search.value.trim().toLowerCase() !== accessPhrase) return;
+searchForm.addEventListener('submit', event => {
+  if (normalizedSearch(search.value) !== accessPhrase) return;
   event.preventDefault();
-  accessForm.reset();
-  document.querySelector('#access-status').textContent = '';
-  accessDialog.showModal();
+  openAccessGate();
 });
 document.querySelector('#dialog-close').addEventListener('click', () => dialog.close());
 dialog.addEventListener('click', event => { if (event.target === dialog) dialog.close(); });
