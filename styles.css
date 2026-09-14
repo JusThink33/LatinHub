@@ -506,6 +506,36 @@ h2 em {
   top: 62%
 }
 
+.pin-india {
+  left: 70%;
+  top: 47%
+}
+
+.pin-france {
+  left: 55%;
+  top: 31%
+}
+
+.pin-korea {
+  right: 22%;
+  top: 36%
+}
+
+.pin-thailand {
+  left: 73%;
+  top: 56%
+}
+
+.pin-turkey {
+  left: 63%;
+  top: 39%
+}
+
+.pin-australia {
+  right: 16%;
+  bottom: 20%
+}
+
 .globe-label {
   position: absolute;
   bottom: 14%;
@@ -581,6 +611,34 @@ h2 em {
   padding: 150px 0
 }
 
+.chef-search {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  max-width: 420px;
+  margin: -20px 0 28px;
+  border-bottom: 1px solid var(--line);
+  padding: 0 0 12px;
+  color: var(--lime)
+}
+
+.chef-search span {
+  font-size: 1.7rem
+}
+
+.chef-search input {
+  width: 100%;
+  border: 0;
+  outline: 0;
+  background: none;
+  color: var(--ink);
+  font: 1rem var(--sans)
+}
+
+.chef-search input::placeholder {
+  color: #676962
+}
+
 .people-grid {
   display: grid;
   grid-template-columns: 1.4fr 1fr 1fr;
@@ -591,7 +649,13 @@ h2 em {
   min-height: 420px;
   position: relative;
   overflow: hidden;
-  background: var(--night-soft)
+  background: var(--night-soft);
+  cursor: pointer;
+  outline: 0
+}
+
+.person-card:focus-visible {
+  box-shadow: 0 0 0 3px var(--lime), 10px 10px 0 var(--tomato)
 }
 
 .person-card img {
@@ -718,6 +782,60 @@ h2 em {
   color: var(--tomato);
   font: 500 .65rem var(--mono);
   text-transform: uppercase
+}
+
+.recipe-guide {
+  border-top: 1px solid var(--line);
+  margin-top: 30px;
+  padding-top: 23px
+}
+
+.recipe-guide[hidden] {
+  display: none
+}
+
+.recipe-guide h3 {
+  font: 500 1.7rem var(--serif);
+  margin: 0 0 20px
+}
+
+.recipe-columns {
+  display: grid;
+  grid-template-columns: 1fr 1.35fr;
+  gap: 28px
+}
+
+.recipe-columns h4 {
+  color: var(--lime);
+  font: 500 .65rem var(--mono);
+  letter-spacing: .1em;
+  text-transform: uppercase;
+  margin: 0 0 12px
+}
+
+.recipe-columns ul,
+.recipe-columns ol {
+  margin: 0;
+  padding-left: 18px;
+  color: #aaa99f;
+  font-size: .78rem;
+  line-height: 1.7
+}
+
+.recipe-columns li {
+  margin-bottom: 7px;
+  padding-left: 3px
+}
+
+.recipe-columns ol li::marker {
+  color: var(--tomato);
+  font-family: var(--mono)
+}
+
+.empty-state {
+  color: var(--muted);
+  font: .8rem var(--mono);
+  padding: 25px 0
 }
 
 @keyframes dialog-in {
@@ -878,5 +996,10 @@ h2 em {
 
   .dialog-copy {
     padding: 34px 25px
+  }
+
+  .recipe-columns {
+    grid-template-columns: 1fr;
+    gap: 20px
   }
 }

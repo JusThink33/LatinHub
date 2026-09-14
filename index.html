@@ -83,6 +83,15 @@
           <button class="map-pin pin-ethiopia" data-region="Ethiopia" type="button"
             aria-label="Explore Ethiopia"></button>
           <button class="map-pin pin-peru" data-region="Peru" type="button" aria-label="Explore Peru"></button>
+          <button class="map-pin pin-india" data-region="India" type="button" aria-label="Explore India"></button>
+          <button class="map-pin pin-france" data-region="France" type="button" aria-label="Explore France"></button>
+          <button class="map-pin pin-korea" data-region="South Korea" type="button"
+            aria-label="Explore South Korea"></button>
+          <button class="map-pin pin-thailand" data-region="Thailand" type="button"
+            aria-label="Explore Thailand"></button>
+          <button class="map-pin pin-turkey" data-region="Turkey" type="button" aria-label="Explore Turkey"></button>
+          <button class="map-pin pin-australia" data-region="Australia" type="button"
+            aria-label="Explore Australia"></button>
           <div class="globe-label">Drag the<br>world</div>
         </div>
         <aside class="atlas-card" id="atlas-card">
@@ -103,32 +112,9 @@
           <h2>People who<br><em>changed the table.</em></h2>
         </div><a class="text-link" href="#chefs">Meet the makers <span>&#8594;</span></a>
       </div>
-      <div class="people-grid">
-        <article class="person-card person-large reveal"><img
-            src="https://images.unsplash.com/photo-1577219491135-ce391730fb2c?auto=format&fit=crop&w=800&q=85"
-            alt="Chef preparing food in a kitchen">
-          <div>
-            <p class="kicker">The new guard</p>
-            <h3>Claudia<br>Moreno</h3><span>Oaxaca / Mexico</span>
-          </div>
-        </article>
-        <article class="person-card reveal"><img
-            src="https://images.unsplash.com/photo-1556910103-1c02745aae4d?auto=format&fit=crop&w=700&q=85"
-            alt="Cook working in a bright kitchen">
-          <div>
-            <p class="kicker">The keepers</p>
-            <h3>Rosa<br>Okafor</h3><span>Lagos / Nigeria</span>
-          </div>
-        </article>
-        <article class="person-card reveal"><img
-            src="https://images.unsplash.com/photo-1574969903809-3f7a166f4f5b?auto=format&fit=crop&w=700&q=85"
-            alt="Chef smiling in a restaurant kitchen">
-          <div>
-            <p class="kicker">The originals</p>
-            <h3>Massimo<br>Conti</h3><span>Naples / Italy</span>
-          </div>
-        </article>
-      </div>
+      <label class="chef-search"><span aria-hidden="true">&#8981;</span><input id="chef-search" type="search"
+          placeholder="Search a chef..." autocomplete="off"></label>
+      <div class="people-grid" id="people-grid"></div>
     </section>
   </main>
 
@@ -140,6 +126,22 @@
       <h2 id="dialog-title"></h2>
       <p id="dialog-text"></p>
       <div class="dialog-facts" id="dialog-facts"></div>
+      <div class="recipe-guide" id="recipe-guide">
+        <div>
+          <p class="kicker">Cook the story</p>
+          <h3>Recipe guide</h3>
+        </div>
+        <div class="recipe-columns">
+          <div>
+            <h4>Ingredients</h4>
+            <ul id="dialog-ingredients"></ul>
+          </div>
+          <div>
+            <h4>Method</h4>
+            <ol id="dialog-steps"></ol>
+          </div>
+        </div>
+      </div>
     </div>
   </dialog>
   <footer class="site-footer section-wrap"><span>LaCousine / LatinHub</span><span>Recipes are memories with a
