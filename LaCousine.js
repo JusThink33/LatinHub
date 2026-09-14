@@ -23,11 +23,11 @@ const regionDishes = {
 };
 
 const chefs = [
-  { name: 'Gordon Ramsay', role: 'The firebrand', place: 'London / United Kingdom', image: 'https://images.unsplash.com/photo-1583394293214-28ded15ee548?auto=format&fit=crop&w=800&q=85', dishes: ['Beef Wellington', 'Lobster ravioli', 'Sticky toffee pudding'] },
-  { name: 'Claudia Moreno', role: 'The new guard', place: 'Oaxaca / Mexico', image: 'https://images.unsplash.com/photo-1577219491135-ce391730fb2c?auto=format&fit=crop&w=800&q=85', dishes: ['Mole negro', 'Tlayudas', 'Sopa de guías'] },
-  { name: 'Rosa Okafor', role: 'The keepers', place: 'Lagos / Nigeria', image: 'https://images.unsplash.com/photo-1556910103-1c02745aae4d?auto=format&fit=crop&w=700&q=85', dishes: ['Jollof rice', 'Egusi soup', 'Suya'] },
-  { name: 'Massimo Conti', role: 'The originals', place: 'Naples / Italy', image: 'https://images.unsplash.com/photo-1574969903809-3f7a166f4f5b?auto=format&fit=crop&w=700&q=85', dishes: ['Cacio e pepe', 'Margherita pizza', 'Risotto'] },
-  { name: 'Hélène Darroze', role: 'The precise', place: 'Paris / France', image: 'https://images.unsplash.com/photo-1556910103-1c02745aae4d?auto=format&fit=crop&w=700&q=85', dishes: ['Poularde truffle', 'Foie gras', 'Basque cheesecake'] }
+  { name: 'Gordon Ramsay', wiki: 'Gordon_Ramsay', role: 'The firebrand', place: 'London / United Kingdom', image: 'https://images.unsplash.com/photo-1583394293214-28ded15ee548?auto=format&fit=crop&w=800&q=85', dishes: [{ name: 'Beef Wellington', url: 'https://www.gordonramsay.com/gr/recipes/beef-wellington/' }, { name: 'Lobster ravioli', url: 'https://www.gordonramsay.com/gr/recipes/' }, { name: 'Sticky toffee pudding', url: 'https://www.gordonramsay.com/gr/recipes/' }] },
+  { name: 'José Andrés', wiki: 'Jos%C3%A9_Andr%C3%A9s', role: 'The connector', place: 'Asturias / Spain', image: 'https://images.unsplash.com/photo-1577219491135-ce391730fb2c?auto=format&fit=crop&w=800&q=85', dishes: [{ name: 'Pan con tomate', url: 'https://www.foodandwine.com/recipes/pan-con-tomate' }, { name: 'Paella', url: 'https://www.foodandwine.com/recipes/paella' }, { name: 'Gazpacho', url: 'https://www.foodandwine.com/recipes/gazpacho' }] },
+  { name: 'Dominique Crenn', wiki: 'Dominique_Crenn', role: 'The poet', place: 'San Francisco / USA', image: 'https://images.unsplash.com/photo-1556910103-1c02745aae4d?auto=format&fit=crop&w=700&q=85', dishes: [{ name: 'Atelier Crenn tasting menu', url: 'https://www.ateliercrenn.com/' }, { name: 'Caviar and sea urchin', url: 'https://www.ateliercrenn.com/' }, { name: 'Vegetable garden', url: 'https://www.ateliercrenn.com/' }] },
+  { name: 'Massimo Bottura', wiki: 'Massimo_Bottura', role: 'The provocateur', place: 'Modena / Italy', image: 'https://images.unsplash.com/photo-1574969903809-3f7a166f4f5b?auto=format&fit=crop&w=700&q=85', dishes: [{ name: 'Oops! I Dropped the Lemon Tart', url: 'https://osteriaalberghetto.com/' }, { name: 'Five Ages of Parmigiano Reggiano', url: 'https://www.osteriafrancescana.it/' }, { name: 'Tortellini', url: 'https://www.osteriafrancescana.it/' }] },
+  { name: 'Hélène Darroze', wiki: 'H%C3%A9l%C3%A8ne_Darroze', role: 'The precise', place: 'Paris / France', image: 'https://images.unsplash.com/photo-1556910103-1c02745aae4d?auto=format&fit=crop&w=700&q=85', dishes: [{ name: 'Poularde with truffle', url: 'https://www.helene-darroze.com/' }, { name: 'Foie gras', url: 'https://www.helene-darroze.com/' }, { name: 'Basque cheesecake', url: 'https://www.helene-darroze.com/' }] }
 ];
 
 const grid = document.querySelector('#dish-grid');
@@ -65,6 +65,7 @@ function openDish(dish) {
   document.querySelector('#dialog-facts').innerHTML = dish.facts.map(fact => `<span>${fact}</span>`).join('');
   document.querySelector('#dialog-ingredients').innerHTML = dish.recipe.ingredients.map(item => `<li>${item}</li>`).join('');
   document.querySelector('#dialog-steps').innerHTML = dish.recipe.steps.map(step => `<li>${step}</li>`).join('');
+  document.querySelector('#recipe-guide').hidden = false;
   dialog.showModal();
 }
 
@@ -77,8 +78,8 @@ document.querySelector('#random-button').addEventListener('click', () => openDis
 
 function renderChefs() {
   const query = chefSearch.value.toLowerCase().trim();
-  const visible = chefs.filter(chef => [chef.name, chef.role, chef.place, ...chef.dishes].join(' ').toLowerCase().includes(query));
-  peopleGrid.innerHTML = visible.length ? visible.map((chef, index) => `<article class="person-card reveal ${index === 0 ? 'person-large' : ''}" data-chef="${chefs.indexOf(chef)}" tabindex="0" role="button" aria-label="Open profile for ${chef.name}"><img src="${chef.image}" alt="${chef.name}"><div><p class="kicker">${chef.role}</p><h3>${chef.name.replace(' ', '<br>')}</h3><span>${chef.place}</span></div></article>`).join('') : '<p class="empty-state">No chef found. Try a name or famous dish.</p>';
+  const visible = chefs.filter(chef => [chef.name, chef.role, chef.place, ...chef.dishes.map(dish => dish.name)].join(' ').toLowerCase().includes(query));
+  peopleGrid.innerHTML = visible.length ? visible.map((chef, index) => `<article class="person-card reveal ${index === 0 ? 'person-large' : ''}" data-chef="${chefs.indexOf(chef)}" tabindex="0" role="button" aria-label="Open profile for ${chef.name}"><img src="${chef.image}" alt="Portrait of ${chef.name}"><div><p class="kicker">${chef.role}</p><h3>${chef.name.replace(' ', '<br>')}</h3><span>${chef.place}</span></div></article>`).join('') : '<p class="empty-state">No chef found. Try a name or famous dish.</p>';
 }
 
 function openChef(chef) {
@@ -87,7 +88,7 @@ function openChef(chef) {
   document.querySelector('#dialog-meta').textContent = `${chef.role} / ${chef.place}`;
   document.querySelector('#dialog-title').textContent = chef.name;
   document.querySelector('#dialog-text').textContent = `${chef.name} is known for turning technique, instinct and a point of view into memorable plates.`;
-  document.querySelector('#dialog-facts').innerHTML = chef.dishes.map(dish => `<span>${dish}</span>`).join('');
+  document.querySelector('#dialog-facts').innerHTML = chef.dishes.map(dish => `<a class="chef-dish-link" href="${dish.url}" target="_blank" rel="noreferrer">${dish.name} &#8599;</a>`).join('');
   document.querySelector('#recipe-guide').hidden = true;
   dialog.showModal();
 }
@@ -96,10 +97,33 @@ peopleGrid.addEventListener('click', event => { const card = event.target.closes
 peopleGrid.addEventListener('keydown', event => { const card = event.target.closest('[data-chef]'); if (card && (event.key === 'Enter' || event.key === ' ')) { event.preventDefault(); openChef(chefs[Number(card.dataset.chef)]); } });
 chefSearch.addEventListener('input', renderChefs);
 
-const globe = document.querySelector('#globe-panel');
-function setRegion(region) {
+async function fetchCountryDish(country) {
+  const areaAliases = { 'United States of America': 'American', 'United Kingdom': 'British', 'South Korea': 'Korean', 'Czechia': 'Czech', 'United Arab Emirates': 'Egyptian' };
+  const area = areaAliases[country] || country;
+  try {
+    const response = await fetch(`https://www.themealdb.com/api/json/v1/1/filter.php?a=${encodeURIComponent(area)}`);
+    const result = await response.json();
+    const meals = result.meals || [];
+    if (meals.length) {
+      const pick = meals[Math.floor(Math.random() * meals.length)];
+      const detailResponse = await fetch(`https://www.themealdb.com/api/json/v1/1/lookup.php?i=${pick.idMeal}`);
+      const detailResult = await detailResponse.json();
+      const detail = detailResult.meals && detailResult.meals[0];
+      if (detail) {
+        const ingredients = Object.keys(detail).filter(key => key.startsWith('strIngredient') && detail[key]).map(key => `${detail[key]} ${detail[key.replace('strIngredient', 'strMeasure')] || ''}`.trim()).slice(0, 8);
+        return { name: detail.strMeal, region: country, category: detail.strCategory || 'Local dish', image: detail.strMealThumb, story: detail.strInstructions || `A dish from ${country}, selected from the world's recipe table.`, maker: `A kitchen in ${country}`, facts: [detail.strArea || country, detail.strCategory || 'Traditional', 'Randomly selected'], recipe: recipe(ingredients, (detail.strInstructions || '').split('. ').filter(Boolean).slice(0, 5)) };
+      }
+    }
+  } catch (error) {
+    console.warn('Country dish lookup unavailable', error);
+  }
+  const fallback = dishes[Math.floor(Math.random() * dishes.length)];
+  return { ...fallback, region: country, story: `A taste of ${country}, represented by ${fallback.name} while the recipe atlas finds its next local story.` };
+}
+
+async function setRegion(region) {
   const options = regionDishes[region];
-  const dish = options[Math.floor(Math.random() * options.length)];
+  const dish = options ? options[Math.floor(Math.random() * options.length)] : await fetchCountryDish(region);
   document.querySelector('#atlas-region').textContent = region;
   document.querySelector('#atlas-image').src = dish.image;
   document.querySelector('#atlas-image').alt = dish.name;
@@ -110,14 +134,37 @@ function setRegion(region) {
   document.querySelector('#atlas-open').onclick = () => openDish(dish);
 }
 
-document.querySelectorAll('.map-pin').forEach(pin => pin.addEventListener('click', () => setRegion(pin.dataset.region)));
-let dragging = false; let startX = 0; let rotation = 0;
-globe.addEventListener('pointerdown', event => { dragging = true; startX = event.clientX; globe.setPointerCapture(event.pointerId); });
-globe.addEventListener('pointermove', event => { if (!dragging) return; rotation += (event.clientX - startX) * .18; startX = event.clientX; globe.style.transform = `rotateY(${rotation}deg) rotateX(${Math.sin(rotation / 80) * 3}deg)`; });
-globe.addEventListener('pointerup', () => { dragging = false; });
+function initializeMap() {
+  const map = L.map('globe-panel', { minZoom: 1, maxZoom: 6, worldCopyJump: true, zoomControl: true }).setView([20, 10], 2);
+  L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', { attribution: '&copy; OpenStreetMap contributors', maxZoom: 6 }).addTo(map);
+  fetch('https://raw.githubusercontent.com/datasets/geo-countries/master/data/countries.geojson')
+    .then(response => response.json())
+    .then(data => {
+      L.geoJSON(data, {
+        style: () => ({ color: '#d7f36b', weight: 1, fillColor: '#314b4c', fillOpacity: .75 }),
+        onEachFeature: (feature, layer) => {
+          const country = feature.properties.ADMIN || feature.properties.name || feature.properties.NAME;
+          layer.bindTooltip(country, { sticky: true, direction: 'top' });
+          layer.on({ mouseover: event => event.target.setStyle({ fillColor: '#f36f4c', fillOpacity: .95, weight: 2 }), mouseout: event => event.target.setStyle({ fillColor: '#314b4c', fillOpacity: .75, weight: 1 }), click: () => { setRegion(country); } });
+        }
+      }).addTo(map);
+    })
+    .catch(() => { document.querySelector('#globe-panel').innerHTML = '<p class="map-error">The world map could not load. Check your connection and refresh.</p>'; });
+}
 
 document.querySelector('#dialog-close').addEventListener('click', () => { document.querySelector('#recipe-guide').hidden = false; dialog.close(); });
 dialog.addEventListener('close', () => { document.querySelector('#recipe-guide').hidden = false; });
-renderLetters(); renderDishes(); renderChefs(); setRegion('Mexico');
+async function loadChefPhotos() {
+  await Promise.all(chefs.filter(chef => chef.wiki).map(async chef => {
+    try {
+      const response = await fetch(`https://en.wikipedia.org/api/rest_v1/page/summary/${chef.wiki}`);
+      const result = await response.json();
+      if (result.thumbnail && result.thumbnail.source) chef.image = result.thumbnail.source;
+    } catch (error) { console.warn('Chef portrait unavailable', chef.name); }
+  }));
+  renderChefs();
+}
+
+renderLetters(); renderDishes(); renderChefs(); setRegion('Mexico'); initializeMap(); loadChefPhotos();
 const observer = new IntersectionObserver(entries => entries.forEach(entry => { if (entry.isIntersecting) entry.target.style.animationPlayState = 'running'; }), { threshold: .15 });
 document.querySelectorAll('.reveal').forEach(element => { element.style.animationPlayState = 'paused'; observer.observe(element); });

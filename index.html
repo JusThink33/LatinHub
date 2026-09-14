@@ -12,6 +12,8 @@
     href="https://fonts.googleapis.com/css2?family=DM+Mono:wght@400;500&family=Playfair+Display:ital,wght@0,500;0,600;1,500;1,600&family=Space+Grotesk:wght@400;500;600;700&display=swap"
     rel="stylesheet">
   <link rel="stylesheet" href="styles.css">
+  <link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css"
+    integrity="sha256-p4NxAoJBhIINfQ3S7pFf3sN1hQ6FzQn6x1M7HnK5p0M=" crossorigin="">
 </head>
 
 <body>
@@ -69,31 +71,10 @@
           <p class="kicker">The world is a menu</p>
           <h2>Point somewhere<br><em>unexpected.</em></h2>
         </div>
-        <p class="section-note">Move across the globe.<br>Click a region to wander.</p>
+        <p class="section-note">Choose a country.<br>Receive a dish from there.</p>
       </div>
       <div class="atlas-layout reveal">
-        <div class="globe-panel" id="globe-panel">
-          <div class="globe-grid" aria-hidden="true"></div>
-          <div class="globe-land land-a" aria-hidden="true"></div>
-          <div class="globe-land land-b" aria-hidden="true"></div>
-          <div class="globe-land land-c" aria-hidden="true"></div>
-          <button class="map-pin pin-mexico" data-region="Mexico" type="button" aria-label="Explore Mexico"></button>
-          <button class="map-pin pin-italy" data-region="Italy" type="button" aria-label="Explore Italy"></button>
-          <button class="map-pin pin-japan" data-region="Japan" type="button" aria-label="Explore Japan"></button>
-          <button class="map-pin pin-ethiopia" data-region="Ethiopia" type="button"
-            aria-label="Explore Ethiopia"></button>
-          <button class="map-pin pin-peru" data-region="Peru" type="button" aria-label="Explore Peru"></button>
-          <button class="map-pin pin-india" data-region="India" type="button" aria-label="Explore India"></button>
-          <button class="map-pin pin-france" data-region="France" type="button" aria-label="Explore France"></button>
-          <button class="map-pin pin-korea" data-region="South Korea" type="button"
-            aria-label="Explore South Korea"></button>
-          <button class="map-pin pin-thailand" data-region="Thailand" type="button"
-            aria-label="Explore Thailand"></button>
-          <button class="map-pin pin-turkey" data-region="Turkey" type="button" aria-label="Explore Turkey"></button>
-          <button class="map-pin pin-australia" data-region="Australia" type="button"
-            aria-label="Explore Australia"></button>
-          <div class="globe-label">Drag the<br>world</div>
-        </div>
+        <div class="globe-panel" id="globe-panel" aria-label="Interactive world map"></div>
         <aside class="atlas-card" id="atlas-card">
           <p class="kicker">A dish from <span id="atlas-region">somewhere</span></p>
           <div class="atlas-card-image"><img id="atlas-image" src="" alt=""></div>
@@ -146,6 +127,8 @@
   </dialog>
   <footer class="site-footer section-wrap"><span>LaCousine / LatinHub</span><span>Recipes are memories with a
       pulse.</span><span>Back to top &#8593;</span></footer>
+  <script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js"
+    integrity="sha256-20nQCchB9co0qIjJZRGuk2/Z9VM+kNiyxNV1lvTlZBo=" crossorigin=""></script>
   <script src="LaCousine.js"></script>
 </body>
 
