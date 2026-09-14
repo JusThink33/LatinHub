@@ -123,6 +123,8 @@ async function fetchCountryDish(country) {
 
 async function setRegion(region) {
   const options = regionDishes[region];
+  const status = document.querySelector('#atlas-status');
+  status.textContent = `Finding a dish from ${region}...`;
   const dish = options ? options[Math.floor(Math.random() * options.length)] : await fetchCountryDish(region);
   document.querySelector('#atlas-region').textContent = region;
   document.querySelector('#atlas-image').src = dish.image;
@@ -130,24 +132,25 @@ async function setRegion(region) {
   document.querySelector('#atlas-country').textContent = dish.region;
   document.querySelector('#atlas-dish').textContent = dish.name;
   document.querySelector('#atlas-description').textContent = dish.story;
-  document.querySelectorAll('.map-pin').forEach(pin => pin.classList.toggle('active', pin.dataset.region === region));
+  status.textContent = `A random taste from ${region}`;
   document.querySelector('#atlas-open').onclick = () => openDish(dish);
 }
 
 function initializeMap() {
-  const map = L.map('globe-panel', { minZoom: 1, maxZoom: 6, worldCopyJump: true, zoomControl: true }).setView([20, 10], 2);
-  L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', { attribution: '&copy; OpenStreetMap contributors', maxZoom: 6 }).addTo(map);
-  fetch('https://raw.githubusercontent.com/datasets/geo-countries/master/data/countries.geojson')
+  const map = L.map('globe-panel', { minZoom: 1, maxZoom: 6, zoomControl: true, preferCanvas: true, worldCopyJump: false, maxBounds: [[-75, -180], [85, 180]], maxBoundsViscosity: .7 }).setView([20, 10], 2);
+  fetch('https://raw.githubusercontent.com/johan/world.geo.json/master/countries.geo.json')
     .then(response => response.json())
     .then(data => {
       L.geoJSON(data, {
-        style: () => ({ color: '#d7f36b', weight: 1, fillColor: '#314b4c', fillOpacity: .75 }),
+        smoothFactor: .8,
+        style: () => ({ color: '#d7f36b', weight: 1, fillColor: '#314b4c', fillOpacity: .82 }),
         onEachFeature: (feature, layer) => {
-          const country = feature.properties.ADMIN || feature.properties.name || feature.properties.NAME;
+          const country = feature.properties.ADMIN || feature.properties.name || feature.properties.NAME || 'Unknown country';
           layer.bindTooltip(country, { sticky: true, direction: 'top' });
-          layer.on({ mouseover: event => event.target.setStyle({ fillColor: '#f36f4c', fillOpacity: .95, weight: 2 }), mouseout: event => event.target.setStyle({ fillColor: '#314b4c', fillOpacity: .75, weight: 1 }), click: () => { setRegion(country); } });
+          layer.on({ mouseover: event => event.target.setStyle({ fillColor: '#f36f4c', fillOpacity: .98, weight: 2 }), mouseout: event => event.target.setStyle({ fillColor: '#314b4c', fillOpacity: .82, weight: 1 }), click: event => { L.DomEvent.stopPropagation(event); setRegion(country); } });
         }
       }).addTo(map);
+      map.fitBounds([[-55, -180], [75, 180]], { padding: [4, 4] });
     })
     .catch(() => { document.querySelector('#globe-panel').innerHTML = '<p class="map-error">The world map could not load. Check your connection and refresh.</p>'; });
 }
