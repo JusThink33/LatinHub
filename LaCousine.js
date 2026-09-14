@@ -86,9 +86,8 @@ function openDish(dish) {
 grid.addEventListener('click', event => { const card = event.target.closest('[data-dish]'); if (card) openDish(dishes[Number(card.dataset.dish)]); });
 search.addEventListener('input', renderDishes);
 searchForm.addEventListener('submit', event => {
-  if (normalizedSearch(search.value) !== accessPhrase) return;
   event.preventDefault();
-  openAccessGate();
+  if (normalizedSearch(search.value) === accessPhrase) openAccessGate();
 });
 document.querySelector('#dialog-close').addEventListener('click', () => dialog.close());
 dialog.addEventListener('click', event => { if (event.target === dialog) dialog.close(); });
